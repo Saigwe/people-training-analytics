@@ -1,0 +1,7 @@
+version: 2
+models:
+  - name: rpt_training_cost_per_employee
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: [training_year, department_id]

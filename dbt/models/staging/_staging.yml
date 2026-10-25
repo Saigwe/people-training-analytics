@@ -1,0 +1,34 @@
+version: 2
+models:
+- name: stg_bronze__departments
+  columns:
+  - name: department_id
+    data_tests:
+    - unique
+    - not_null
+- name: stg_bronze__employees
+  columns:
+  - name: employee_id
+    data_tests:
+    - unique
+    - not_null
+  - name: department_id
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('stg_bronze__departments')
+          field: department_id
+- name: stg_bronze__trainings
+  columns:
+  - name: training_id
+    data_tests:
+    - unique
+    - not_null
+  - name: employee_id
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('stg_bronze__employees')
+          field: employee_id
