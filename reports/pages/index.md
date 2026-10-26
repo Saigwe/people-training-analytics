@@ -24,8 +24,8 @@ select odds_ratio, ci_low, ci_high from people.attrition_model
 where model = 'adjusted' and term = 'Each extra training last year'
 ```
 
-<BigValue data={headline} value=cost_2025 title="Training spend 2025 (synthetic)" fmt="£#,##0" />
-<BigValue data={headline} value=cost_per_employee_2025 title="Per employee on payroll, 2025 (synthetic)" fmt="£#,##0" />
+<BigValue data={headline} value=cost_2025 title="Training spend 2025 (synthetic)" fmt=gbp0 />
+<BigValue data={headline} value=cost_per_employee_2025 title="Per employee on payroll, 2025 (synthetic)" fmt=gbp0 />
 <BigValue data={attrition_all} value=attrition_rate title="Attrition, 0 trainings last year (real)" fmt=pct1 />
 <BigValue data={training_or} value=odds_ratio title="Odds of leaving per extra training, adjusted (real)" fmt=num2 />
 
@@ -34,13 +34,13 @@ where model = 'adjusted' and term = 'Each extra training last year'
 Spend divided by everyone on payroll at any point in the year, including people who trained nothing. Synthetic.
 
 ```sql cost
-select training_year::varchar as year, department, cost_per_employee_gbp, hours_per_employee, employees_on_payroll,
+select cast(cast(training_year as integer) as varchar) as year, department, cost_per_employee_gbp, hours_per_employee, employees_on_payroll,
        employees_trained, trainings, training_cost_gbp
 from people.training_cost_per_employee
 order by training_year, department
 ```
 
-<BarChart data={cost} x=year y=cost_per_employee_gbp series=department type=grouped yFmt="£#,##0"
+<BarChart data={cost} x=year y=cost_per_employee_gbp series=department type=grouped sort=false yFmt=gbp0
           title="Cost per employee by year and department" />
 
 <DataTable data={cost} rows=15>
@@ -49,8 +49,8 @@ order by training_year, department
   <Column id=employees_on_payroll title="On payroll" />
   <Column id=employees_trained title="Trained" />
   <Column id=trainings />
-  <Column id=training_cost_gbp title="Spend" fmt="£#,##0" />
-  <Column id=cost_per_employee_gbp title="Per employee" fmt="£#,##0" />
+  <Column id=training_cost_gbp title="Spend" fmt=gbp0 />
+  <Column id=cost_per_employee_gbp title="Per employee" fmt=gbp0 />
   <Column id=hours_per_employee title="Hours per employee" fmt=num1 />
 </DataTable>
 
@@ -100,7 +100,7 @@ from people.attrition_by_training
 order by department, training_band
 ```
 
-<BarChart data={cohorts} x=training_band y=attrition_rate series=department type=grouped yFmt=pct0
+<BarChart data={cohorts} x=training_band y=attrition_rate series=department type=grouped sort=false yFmt=pct0
           title="Attrition rate by trainings last year" />
 
 <DataTable data={cohorts} rows=16>
