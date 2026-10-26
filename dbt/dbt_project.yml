@@ -4,6 +4,8 @@ config-version: 2
 profile: people_training_analytics
 model-paths:
 - models
+seed-paths:
+- seeds
 macro-paths:
 - macros
 test-paths:
@@ -20,3 +22,6 @@ models:
     marts:
       +schema: gold
       +materialized: table
+seeds:
+  people_training_analytics:
+    +schema: silver

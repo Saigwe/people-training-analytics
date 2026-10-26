@@ -1,31 +1,32 @@
--- Training spend per employee by year and department (employees on payroll at any point in the year).
+-- Training spend per employee by year and department. The denominator is everyone on payroll at any point in the year,
+-- so people who trained nothing still count.
 with years as (
-    select distinct extract(year from training_date) as training_year from {{ ref('stg_bronze__trainings') }}
+    select unnest(range(2021, 2026)) as training_year
 ),
 
-headcount as (
-    select y.training_year, e.department_id, count(*) as employees
+on_payroll as (
+    select y.training_year, e.department, e.employee_id
     from years y
-    join {{ ref('stg_bronze__employees') }} e
-        on extract(year from e.hire_date) <= y.training_year
-        and (e.leave_date is null or extract(year from e.leave_date) >= y.training_year)
-    group by 1, 2
+    join {{ ref('dim_employee') }} e
+      on e.hire_date <= make_date(y.training_year, 12, 31)
+     and coalesce(e.exit_date, date '9999-12-31') >= make_date(y.training_year, 1, 1)
 ),
 
 spend as (
-    select extract(year from t.training_date) as training_year, e.department_id,
-           sum(t.cost_usd) as cost_usd, sum(t.hours) as hours
-    from {{ ref('stg_bronze__trainings') }} t
-    join {{ ref('stg_bronze__employees') }} e on e.employee_id = t.employee_id
-    group by 1, 2
+    select training_year, department, employee_id, count(*) as trainings, sum(cost_gbp) as cost_gbp, sum(hours) as hours
+    from {{ ref('fct_training') }}
+    group by all
 )
 
 select
-    h.training_year,
-    h.department_id,
-    h.employees,
-    coalesce(s.cost_usd, 0)                     as cost_usd,
-    coalesce(s.hours, 0)                        as hours,
-    coalesce(s.cost_usd, 0) / h.employees       as cost_per_employee_usd
-from headcount h
-left join spend s on s.training_year = h.training_year and s.department_id = h.department_id
+    p.training_year,
+    p.department,
+    count(*)                                              as employees_on_payroll,
+    count(s.employee_id)                                  as employees_trained,
+    coalesce(sum(s.trainings), 0)                         as trainings,
+    coalesce(sum(s.cost_gbp), 0)                          as training_cost_gbp,
+    round(coalesce(sum(s.cost_gbp), 0) / count(*), 2)     as cost_per_employee_gbp,
+    round(coalesce(sum(s.hours), 0) / count(*), 2)        as hours_per_employee
+from on_payroll p
+left join spend s using (training_year, department, employee_id)
+group by all

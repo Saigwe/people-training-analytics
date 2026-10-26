@@ -1,0 +1,12 @@
+deployment:
+  basePath: /reports/people-training
+
+appearance:
+  default: system
+  switcher: true
+
+plugins:
+  components:
+    "@evidence-dev/core-components": {}
+  datasources:
+    "@evidence-dev/csv": {}

@@ -1,0 +1,8 @@
+term,model,odds_ratio,ci_low,ci_high,p_value
+Each extra training last year,unadjusted,0.8781,0.7852,0.9821,0.0229
+Works overtime,adjusted,5.8753,4.1287,8.3609,0.0
+Each extra training last year,adjusted,0.8413,0.7331,0.9655,0.0139
+Each job level up,adjusted,1.2906,0.8392,1.9848,0.2453
+"log(monthly income), per unit",adjusted,0.2281,0.1205,0.4319,0.0
+Each stock option level,adjusted,0.8534,0.6407,1.1368,0.2785
+Each point of job satisfaction (1-4),adjusted,0.6837,0.5879,0.7951,0.0

@@ -1,0 +1,63 @@
+{
+  "employees": 1470,
+  "leavers": 237,
+  "pseudo_r2_adjusted": 0.291,
+  "odds_ratios": [
+    {
+      "term": "Each extra training last year",
+      "model": "unadjusted",
+      "odds_ratio": 0.8781,
+      "ci_low": 0.7852,
+      "ci_high": 0.9821,
+      "p_value": 0.0229
+    },
+    {
+      "term": "Works overtime",
+      "model": "adjusted",
+      "odds_ratio": 5.8753,
+      "ci_low": 4.1287,
+      "ci_high": 8.3609,
+      "p_value": 0.0
+    },
+    {
+      "term": "Each extra training last year",
+      "model": "adjusted",
+      "odds_ratio": 0.8413,
+      "ci_low": 0.7331,
+      "ci_high": 0.9655,
+      "p_value": 0.0139
+    },
+    {
+      "term": "Each job level up",
+      "model": "adjusted",
+      "odds_ratio": 1.2906,
+      "ci_low": 0.8392,
+      "ci_high": 1.9848,
+      "p_value": 0.2453
+    },
+    {
+      "term": "log(monthly income), per unit",
+      "model": "adjusted",
+      "odds_ratio": 0.2281,
+      "ci_low": 0.1205,
+      "ci_high": 0.4319,
+      "p_value": 0.0
+    },
+    {
+      "term": "Each stock option level",
+      "model": "adjusted",
+      "odds_ratio": 0.8534,
+      "ci_low": 0.6407,
+      "ci_high": 1.1368,
+      "p_value": 0.2785
+    },
+    {
+      "term": "Each point of job satisfaction (1-4)",
+      "model": "adjusted",
+      "odds_ratio": 0.6837,
+      "ci_low": 0.5879,
+      "ci_high": 0.7951,
+      "p_value": 0.0
+    }
+  ]
+}

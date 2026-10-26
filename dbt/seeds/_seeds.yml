@@ -1,0 +1,12 @@
+version: 2
+
+seeds:
+  - name: job_role_onet
+    description: "My mapping of each IBM job role to the closest O*NET 30.0 occupation, with the reason."
+    columns:
+      - name: job_role
+        tests: [unique, not_null]
+      - name: onet_soc_code
+        tests:
+          - not_null
+          - relationships: {arguments: {to: ref('stg_onet__occupations'), field: onet_soc_code}}

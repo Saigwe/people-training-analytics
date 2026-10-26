@@ -1,34 +1,63 @@
 version: 2
+
 models:
-- name: stg_bronze__departments
-  columns:
-  - name: department_id
-    data_tests:
-    - unique
-    - not_null
-- name: stg_bronze__employees
-  columns:
-  - name: employee_id
-    data_tests:
-    - unique
-    - not_null
-  - name: department_id
-    data_tests:
-    - not_null
-    - relationships:
-        arguments:
-          to: ref('stg_bronze__departments')
-          field: department_id
-- name: stg_bronze__trainings
-  columns:
-  - name: training_id
-    data_tests:
-    - unique
-    - not_null
-  - name: employee_id
-    data_tests:
-    - not_null
-    - relationships:
-        arguments:
-          to: ref('stg_bronze__employees')
-          field: employee_id
+  - name: stg_ibm__employees
+    description: "REAL. One row per employee."
+    columns:
+      - name: employee_id
+        tests: [unique, not_null]
+      - name: job_role
+        tests:
+          - not_null
+          - relationships: {arguments: {to: ref('job_role_onet'), field: job_role}}
+      - name: department
+        tests:
+          - accepted_values:
+              arguments: {values: ['Sales', 'Research & Development', 'Human Resources']}
+      - name: training_times_last_year
+        tests: [not_null]
+  - name: stg_onet__skills
+    description: "REAL. One row per O*NET occupation and skill."
+    tests:
+      - unique_combination:
+          arguments: {columns: [onet_soc_code, skill_id]}
+    columns:
+      - name: importance
+        tests: [not_null]
+      - name: required_level
+        tests: [not_null]
+  - name: stg_onet__occupations
+    columns:
+      - name: onet_soc_code
+        tests: [unique, not_null]
+  - name: stg_synthetic__employee_dates
+    columns:
+      - name: employee_id
+        tests:
+          - unique
+          - not_null
+          - relationships: {arguments: {to: ref('stg_ibm__employees'), field: employee_id}}
+      - name: hire_date
+        tests: [not_null]
+  - name: stg_synthetic__courses
+    columns:
+      - name: course_id
+        tests: [unique, not_null]
+      - name: skill_id
+        tests: [unique, not_null]
+      - name: course_format
+        tests:
+          - accepted_values:
+              arguments: {values: ['e-learning', 'classroom', 'certification']}
+  - name: stg_synthetic__trainings
+    columns:
+      - name: training_id
+        tests: [unique, not_null]
+      - name: employee_id
+        tests:
+          - not_null
+          - relationships: {arguments: {to: ref('stg_ibm__employees'), field: employee_id}}
+      - name: course_id
+        tests:
+          - not_null
+          - relationships: {arguments: {to: ref('stg_synthetic__courses'), field: course_id}}

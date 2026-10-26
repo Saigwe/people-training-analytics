@@ -1,8 +1,18 @@
 version: 2
+
 sources:
-- name: bronze
-  description: Raw tables, loaded by the fixture generator (CI) or the real-data loaders.
-  tables:
-  - name: departments
-  - name: employees
-  - name: trainings
+  - name: bronze
+    schema: bronze
+    tables:
+      - name: ibm_employees
+        description: "REAL. IBM HR Analytics Employee Attrition (1,470 fictional employees created by IBM for teaching), unchanged."
+      - name: onet_skills
+        description: "REAL. O*NET 30.0 Skills: importance (IM, 1-5) and level (LV, 0-7) of 35 skills for each occupation. CC BY 4.0."
+      - name: onet_occupations
+        description: "REAL. O*NET 30.0 occupation titles."
+      - name: employee_dates
+        description: "SYNTHETIC. Hire date derived from the real tenure; exit date in 2025 for real leavers."
+      - name: course_catalog
+        description: "SYNTHETIC. One course per O*NET skill, with format, cost and hours."
+      - name: trainings
+        description: "SYNTHETIC. Course completions 2021-2025; the last year matches the real TrainingTimesLastYear."

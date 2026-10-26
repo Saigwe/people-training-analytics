@@ -4,5 +4,5 @@ people_training_analytics:
   outputs:
     duckdb:
       type: duckdb
-      path: "{{ env_var('DUCKDB_PATH', '../warehouse/people_training_analytics.duckdb') }}"
+      path: "{{ env_var('DUCKDB_PATH', '../warehouse/people.duckdb') }}"
       threads: 4

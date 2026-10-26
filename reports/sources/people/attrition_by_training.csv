@@ -1,0 +1,17 @@
+department,training_band,employees,leavers,attrition_rate
+All,0,54,15,0.278
+All,1-2,618,107,0.173
+All,3-4,614,95,0.155
+All,5-6,184,20,0.109
+Human Resources,0,3,2,0.667
+Human Resources,1-2,30,5,0.167
+Human Resources,3-4,25,5,0.2
+Human Resources,5-6,5,0,0.0
+Research & Development,0,38,8,0.211
+Research & Development,1-2,414,67,0.162
+Research & Development,3-4,388,46,0.119
+Research & Development,5-6,121,12,0.099
+Sales,0,13,5,0.385
+Sales,1-2,174,35,0.201
+Sales,3-4,201,44,0.219
+Sales,5-6,58,8,0.138

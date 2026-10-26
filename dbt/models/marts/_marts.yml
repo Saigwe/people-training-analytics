@@ -1,7 +1,40 @@
 version: 2
+
 models:
+  - name: dim_employee
+    description: "One row per employee (real attributes, synthetic dates)."
+    columns:
+      - name: employee_id
+        tests: [unique, not_null]
+      - name: onet_soc_code
+        tests: [not_null]
+  - name: fct_training
+    description: "One row per course completion (synthetic)."
+    columns:
+      - name: training_id
+        tests: [unique, not_null]
+      - name: cost_gbp
+        tests: [not_null]
   - name: rpt_training_cost_per_employee
-    data_tests:
+    description: "Training cost and hours per employee on payroll, by year and department."
+    tests:
       - unique_combination:
-          arguments:
-            columns: [training_year, department_id]
+          arguments: {columns: [training_year, department]}
+  - name: rpt_competency_requirements
+    description: "REAL. Top 8 O*NET skills per job role, with importance and required level."
+    tests:
+      - unique_combination:
+          arguments: {columns: [job_role, skill_id]}
+  - name: rpt_competency_gap_matrix
+    description: "Required (real) vs achieved (synthetic model) competency by job role and skill."
+    tests:
+      - unique_combination:
+          arguments: {columns: [job_role, skill_id]}
+    columns:
+      - name: share_meeting_requirement
+        tests: [not_null]
+  - name: rpt_attrition_by_training
+    description: "REAL. Attrition rate by last-year training band, overall and by department."
+    tests:
+      - unique_combination:
+          arguments: {columns: [department, training_band]}
