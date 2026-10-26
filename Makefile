@@ -15,7 +15,7 @@ generate:   ## SYNTHETIC employment dates, course catalogue and training history
 	$(PY) ingestion/generate_training.py --db $(DB)
 
 dbt:
-	$(DBT) build --profiles-dir .
+	$(DBT) deps --profiles-dir . && $(DBT) build --profiles-dir .
 
 model:      ## logistic regression on the real IBM fields
 	$(PY) analysis/attrition_model.py --db $(DB) --out $(RESULTS)

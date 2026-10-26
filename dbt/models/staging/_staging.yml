@@ -19,7 +19,7 @@ models:
   - name: stg_onet__skills
     description: "REAL. One row per O*NET occupation and skill."
     tests:
-      - unique_combination:
+      - trust_tests.unique_combination:
           arguments: {columns: [onet_soc_code, skill_id]}
     columns:
       - name: importance

@@ -18,17 +18,17 @@ models:
   - name: rpt_training_cost_per_employee
     description: "Training cost and hours per employee on payroll, by year and department."
     tests:
-      - unique_combination:
+      - trust_tests.unique_combination:
           arguments: {columns: [training_year, department]}
   - name: rpt_competency_requirements
     description: "REAL. Top 8 O*NET skills per job role, with importance and required level."
     tests:
-      - unique_combination:
+      - trust_tests.unique_combination:
           arguments: {columns: [job_role, skill_id]}
   - name: rpt_competency_gap_matrix
     description: "Required (real) vs achieved (synthetic model) competency by job role and skill."
     tests:
-      - unique_combination:
+      - trust_tests.unique_combination:
           arguments: {columns: [job_role, skill_id]}
     columns:
       - name: share_meeting_requirement
@@ -36,5 +36,5 @@ models:
   - name: rpt_attrition_by_training
     description: "REAL. Attrition rate by last-year training band, overall and by department."
     tests:
-      - unique_combination:
+      - trust_tests.unique_combination:
           arguments: {columns: [department, training_band]}
