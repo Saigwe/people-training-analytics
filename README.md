@@ -144,7 +144,7 @@ cd reports && npm install && npm run sources && npm run dev   # the Evidence rep
 - [x] Attrition cohorts: trained vs not trained
 - [x] Evidence.dev report
 - [x] Fill in [Numbers](#numbers) and the [design doc](docs/design_doc.md)
-- [ ] 3-minute Loom walkthrough
+- [ ] 3-minute Loom walkthrough ([script ready](docs/walkthrough.md))
 
 ## Interview topics this project prepares
 - HR metrics: why cost per employee divides by everyone on payroll, and how leavers enter the denominator
