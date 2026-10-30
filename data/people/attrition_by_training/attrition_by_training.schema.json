@@ -1,0 +1,1 @@
+[{"name":"department","evidenceType":"string","typeFidelity":"precise"},{"name":"training_band","evidenceType":"string","typeFidelity":"precise"},{"name":"employees","evidenceType":"number","typeFidelity":"precise"},{"name":"leavers","evidenceType":"number","typeFidelity":"precise"},{"name":"attrition_rate","evidenceType":"number","typeFidelity":"precise"}]
