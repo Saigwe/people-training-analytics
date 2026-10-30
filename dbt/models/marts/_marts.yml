@@ -38,3 +38,23 @@ models:
     tests:
       - trust_tests.unique_combination:
           arguments: {columns: [department, training_band]}
+  - name: fct_application
+    description: "SYNTHETIC. One row per application: furthest stage reached, stage dates, days to offer and to start."
+    columns:
+      - name: application_id
+        data_tests: [unique, not_null]
+  - name: rpt_recruitment_funnel
+    description: "SYNTHETIC. Applications reaching each stage, with conversion, by role, by source channel and overall."
+    data_tests:
+      - trust_tests.unique_combination:
+          arguments: {columns: [cut, segment, stage]}
+  - name: rpt_interviewer_calibration
+    description: "SYNTHETIC. Each interviewer's average offset from their co-panellists, with a 95% CI and a calibration flag."
+    columns:
+      - name: interviewer_id
+        data_tests: [unique, not_null]
+  - name: fct_interview_result
+    description: "SYNTHETIC. Raw and calibrated panel averages, ranks, offer decisions and first-year outcomes."
+    columns:
+      - name: application_id
+        data_tests: [unique, not_null]

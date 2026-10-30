@@ -1,0 +1,41 @@
+version: 2
+
+sources:
+  - name: recruitment
+    schema: bronze
+    description: "SYNTHETIC. Recruitment funnel and structured interview scores from ingestion/generate_recruitment.py."
+    tables:
+      - name: requisitions
+      - name: applications
+      - name: application_events
+      - name: interview_scores
+      - name: hire_outcomes
+  - name: answer_key
+    schema: answer_key
+    description: "The two miscalibrated interviewers planted by the generator. Used only by tests."
+    tables:
+      - name: interviewer_bias
+
+models:
+  - name: stg_synthetic__applications
+    columns:
+      - name: application_id
+        data_tests: [unique, not_null]
+  - name: stg_synthetic__application_events
+    data_tests:
+      - trust_tests.unique_combination:
+          arguments: {columns: [application_id, stage]}
+    columns:
+      - name: stage
+        data_tests:
+          - accepted_values:
+              arguments: {values: [applied, screened, assessed, interviewed, offered, accepted, started]}
+  - name: stg_synthetic__interview_scores
+    data_tests:
+      - trust_tests.unique_combination:
+          arguments: {columns: [application_id, interviewer_id, competency]}
+    columns:
+      - name: score
+        data_tests:
+          - accepted_values:
+              arguments: {values: [1, 2, 3, 4, 5]}

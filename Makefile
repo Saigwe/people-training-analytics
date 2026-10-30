@@ -11,8 +11,9 @@ all: load generate dbt model report-data   ## real data: IBM + O*NET into bronze
 load:       ## IBM attrition CSV and O*NET 30.0 text files, already in data/raw (see ingestion/README.md)
 	$(PY) ingestion/load.py --raw data/raw --db $(DB)
 
-generate:   ## SYNTHETIC employment dates, course catalogue and training history (fixed seed)
+generate:   ## SYNTHETIC employment dates, course catalogue, training history and recruitment funnel (fixed seeds)
 	$(PY) ingestion/generate_training.py --db $(DB)
+	$(PY) ingestion/generate_recruitment.py --db $(DB)
 
 dbt:
 	$(DBT) deps --profiles-dir .
